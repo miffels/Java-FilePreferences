@@ -98,8 +98,11 @@ public class FilePreferences extends AbstractPreferences {
 
 		synchronized (file) {
 			Properties p = new Properties();
+			FileInputStream fis = null;
 			try {
-				p.load(new FileInputStream(file));
+				fis = new FileInputStream(file);
+				p.load(fis);
+				fis.close();
 
 				StringBuilder sb = new StringBuilder();
 				getPath(sb);
@@ -118,6 +121,14 @@ public class FilePreferences extends AbstractPreferences {
 				}
 			} catch (IOException e) {
 				throw new BackingStoreException(e);
+			} finally {
+				try {
+					if(fis != null) {
+						fis.close();
+					}
+				} catch (IOException e) {
+					throw new BackingStoreException(e);
+				}
 			}
 		}
 	}
