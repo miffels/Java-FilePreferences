@@ -47,6 +47,7 @@ public class FilePreferences extends AbstractPreferences {
 			flush();
 		} catch (BackingStoreException e) {
 			log.log(Level.SEVERE, "Unable to flush after putting " + key, e);
+			throw new RuntimeException(e);
 		}
 	}
 
