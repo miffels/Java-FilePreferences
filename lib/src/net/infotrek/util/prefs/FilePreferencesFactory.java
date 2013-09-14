@@ -37,17 +37,22 @@ public class FilePreferencesFactory implements PreferencesFactory {
 		return rootPreferences;
 	}
 
-	private static File preferencesFile;
+	private static volatile File preferencesFile;
+	private static final Object lock = new Object();
 
 	public static File getPreferencesFile() {
 		if (preferencesFile == null) {
-			String prefsFile = System.getProperty(SYSTEM_PROPERTY_FILE);
-			if (prefsFile == null || prefsFile.length() == 0) {
-				prefsFile = System.getProperty("user.home") + File.separator
-						+ ".fileprefs";
+			synchronized(lock) {
+				if(preferencesFile == null) {
+					String prefsFile = System.getProperty(SYSTEM_PROPERTY_FILE);
+					if (prefsFile == null || prefsFile.length() == 0) {
+						prefsFile = System.getProperty("user.home") + File.separator
+								+ ".fileprefs";
+					}
+					preferencesFile = new File(prefsFile).getAbsoluteFile();
+					log.finer("Preferences file is " + preferencesFile);
+				}
 			}
-			preferencesFile = new File(prefsFile).getAbsoluteFile();
-			log.finer("Preferences file is " + preferencesFile);
 		}
 		return preferencesFile;
 	}
