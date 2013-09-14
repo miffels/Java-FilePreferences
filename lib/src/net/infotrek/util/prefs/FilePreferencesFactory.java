@@ -1,7 +1,6 @@
 package net.infotrek.util.prefs;
 
 import java.io.File;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import java.util.prefs.PreferencesFactory;
 
@@ -18,8 +17,6 @@ import java.util.prefs.PreferencesFactory;
  * @author Michael Jess (<a href="https://github.com/miffels">Michael@github</a>)
  */
 public class FilePreferencesFactory implements PreferencesFactory {
-	private static final Logger log = Logger
-			.getLogger(FilePreferencesFactory.class.getName());
 	public static final String SYSTEM_PROPERTY_FILE = "net.infotrek.util.prefs.FilePreferencesFactory.file";
 
 	Preferences rootPreferences;
@@ -30,8 +27,6 @@ public class FilePreferencesFactory implements PreferencesFactory {
 
 	public Preferences userRoot() {
 		if (rootPreferences == null) {
-			log.finer("Instantiating root preferences");
-
 			rootPreferences = new FilePreferences(null, "");
 		}
 		return rootPreferences;
@@ -50,7 +45,6 @@ public class FilePreferencesFactory implements PreferencesFactory {
 								+ ".fileprefs";
 					}
 					preferencesFile = new File(prefsFile).getAbsoluteFile();
-					log.finer("Preferences file is " + preferencesFile);
 				}
 			}
 		}

@@ -1,14 +1,17 @@
 package net.infotrek.util.prefs;
 
-import java.util.*;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.prefs.AbstractPreferences;
-import java.util.prefs.BackingStoreException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
+import java.util.prefs.AbstractPreferences;
+import java.util.prefs.BackingStoreException;
 
 /**
  * Preferences implementation that stores to a user-defined file. See
@@ -18,9 +21,6 @@ import java.io.FileOutputStream;
  * @author Michael Jess (<a href="https://github.com/miffels">Michael@github</a>)
  */
 public class FilePreferences extends AbstractPreferences {
-	private static final Logger log = Logger.getLogger(FilePreferences.class
-			.getName());
-
 	private Map<String, String> root;
 	private Map<String, FilePreferences> children;
 	private boolean isRemoved = false;
@@ -28,16 +28,13 @@ public class FilePreferences extends AbstractPreferences {
 	public FilePreferences(AbstractPreferences parent, String name) {
 		super(parent, name);
 
-		log.finest("Instantiating node " + name);
-
 		root = new TreeMap<String, String>();
 		children = new TreeMap<String, FilePreferences>();
 
 		try {
 			sync();
 		} catch (BackingStoreException e) {
-			log.log(Level.SEVERE, "Unable to sync on creation of node " + name,
-					e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -46,7 +43,6 @@ public class FilePreferences extends AbstractPreferences {
 		try {
 			flush();
 		} catch (BackingStoreException e) {
-			log.log(Level.SEVERE, "Unable to flush after putting " + key, e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -60,7 +56,6 @@ public class FilePreferences extends AbstractPreferences {
 		try {
 			flush();
 		} catch (BackingStoreException e) {
-			log.log(Level.SEVERE, "Unable to flush after removing " + key, e);
 			throw new RuntimeException(e);
 		}
 	}
