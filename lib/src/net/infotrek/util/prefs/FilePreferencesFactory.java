@@ -15,7 +15,7 @@ import java.util.prefs.PreferencesFactory;
  * system property <tt>net.infotrek.util.prefs.FilePreferencesFactory.file</tt>
  * 
  * @author David Croft (<a href="http://www.davidc.net">www.davidc.net</a>)
- * @version $Id: FilePreferencesFactory.java 282 2009-06-18 17:05:18Z david $
+ * @author Michael Jess (<a href="https://github.com/miffels">Michael@github</a>)
  */
 public class FilePreferencesFactory implements PreferencesFactory {
 	private static final Logger log = Logger

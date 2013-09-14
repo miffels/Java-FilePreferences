@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
  * FilePreferencesFactory.
  * 
  * @author David Croft (<a href="http://www.davidc.net">www.davidc.net</a>)
- * @version $Id: FilePreferences.java 283 2009-06-18 17:06:58Z david $
+ * @author Michael Jess (<a href="https://github.com/miffels">Michael@github</a>)
  */
 public class FilePreferences extends AbstractPreferences {
 	private static final Logger log = Logger.getLogger(FilePreferences.class
