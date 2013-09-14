@@ -61,6 +61,7 @@ public class FilePreferences extends AbstractPreferences {
 			flush();
 		} catch (BackingStoreException e) {
 			log.log(Level.SEVERE, "Unable to flush after removing " + key, e);
+			throw new RuntimeException(e);
 		}
 	}
 
