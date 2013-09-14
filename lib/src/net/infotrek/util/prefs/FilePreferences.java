@@ -147,14 +147,16 @@ public class FilePreferences extends AbstractPreferences {
 
 		synchronized (file) {
 			Properties p = new Properties();
+			FileInputStream fis = null;
+			FileOutputStream fos = null;
 			try {
-
 				StringBuilder sb = new StringBuilder();
 				getPath(sb);
 				String path = sb.toString();
 
 				if (file.exists()) {
-					p.load(new FileInputStream(file));
+					fis = new FileInputStream(file);
+					p.load(fis);
 
 					List<String> toRemove = new ArrayList<String>();
 
@@ -185,9 +187,25 @@ public class FilePreferences extends AbstractPreferences {
 					}
 				}
 
-				p.store(new FileOutputStream(file), "FilePreferences");
+				fos = new FileOutputStream(file);
+				p.store(fos, "FilePreferences");
 			} catch (IOException e) {
 				throw new BackingStoreException(e);
+			} finally {
+				if(fis != null) {
+					try {
+						fis.close();
+					} catch (IOException e) {
+						throw new BackingStoreException(e);
+					}
+				}
+				if(fos != null) {
+					try {
+						fos.close();
+					} catch (IOException e) {
+						throw new BackingStoreException(e);
+					}
+				}
 			}
 		}
 	}
